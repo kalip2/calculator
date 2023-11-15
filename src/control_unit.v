@@ -1,45 +1,48 @@
-`define add 4'hA
-`define sub 4'hB
-`define mul 4'hC
-`define div 4'hD
-`define equal 4'hE
-`define clear 4'hF
+// Define operation codes
+`define ZERO 4'h0
+`define ONE 4'h1
+`define TWO 4'h2
+`define THREE 4'h3
+`define FOUR 4'h4
+`define FIVE 4'h5
+`define SIX 4'h6
+`define SEVEN 4'h7
+`define EIGHT 4'h8
+`define NINE 4'h9
+`define ADD 4'hA
+`define SUB 4'hB
+`define MUL 4'hC
+`define DIV 4'hD
+`define EQUAL 4'hE
+`define CLEAR 4'hF
 
 module control_unit (
-    output display,  //! OLED Display
-    output reg [31:0] operandF = 0,
-    output reg [31:0] operandS = 0,
-    input [3:0] button,  //! The button pressed by the user (0-9, +, -, *, /, =)
-    input is_pressed_next,  // When the user presses a button    
-    input clock,  // positive edge
-    input reset  // When we initialize the calculator and reset
+    output            display,          // OLED Display output
+    output reg [31:0] operandF = 0,     // First operand
+    output reg [31:0] operandS = 0,     // Second operand
+    input      [ 3:0] button,           // User input button (0-9, +, -, *, /, =)
+    input             is_pressed_next,  // Button press signal
+    input             clock,            // Clock signal
+    input             reset             // Reset signal
 );
 
-  // operandF = 0;  //! The first number shown on the display
-  // operandS = 0;  //! The second number shown on the display
-  reg [1:0] alu_op = 0;  //! state 0 = +, state 1 = -, state 2 = *, state 3 = /
+  reg [1:0] alu_op = 0;  // ALU operation state (0: +, 1: -, 2: *, 3: /)
 
-  // output of the DFFE's state
-  wire s_initial;  // state 0
-  wire s_operandF;  // state 1
-  wire s_operation;  // state 2
-  wire s_operandS;  // state 3
-  wire s_result;  // state 4
+  // State outputs
+  wire s_initial, s_operandF, s_operation, s_operandS, s_result;
 
-  // input of the DFFE's next state
-  wire next_initial;
-  wire next_operandF;
-  wire next_operation;
-  wire next_operandS;
-  wire next_result;
+  // Next state inputs
+  wire next_initial, next_operandF, next_operation, next_operandS, next_result;
   wire button_pressed = (is_pressed == 0 & is_pressed_next == 1);
 
+
+
   wire is_number = button_pressed & (button >= 4'h0 && button <= 4'h9);
-  wire is_equal = button_pressed & (button == `equal);
-  wire is_op = button_pressed & (button == `add | button == `sub | button == `mul | button == `div);
-  wire is_clear = button_pressed & (button == `clear);
+  wire is_equal = button_pressed & (button == `EQUAL);
+  wire is_op = button_pressed & (button == `ADD | button == `SUB | button == `MUL | button == `DIV);
+  wire is_clear = button_pressed & (button == `CLEAR);
   wire is_pressed;
-  // if state is initial or operandF, 
+
 
   always @(posedge clock) begin
     if (s_initial && is_number) begin
@@ -47,29 +50,18 @@ module control_unit (
     end else if (s_operandF && is_number) begin
       operandF = operandF * 10 + button;
     end else if ((s_operandF || s_result) && is_op) begin
-      if (button == `add) begin
-        alu_op = 0;
-      end else if (button == `sub) begin
-        alu_op = 1;
-      end else if (button == `mul) begin
-        alu_op = 2;
-      end else if (button == `div) begin
-        alu_op = 3;
-      end
+      alu_op = (button == `ADD) ? 0 : (button == `SUB) ? 1 : (button == `MUL) ? 2 : 3;
     end else if (s_operation && is_number) begin
       operandS = button;
     end else if (s_operandS && is_number) begin
       operandS = operandS * 10 + button;
     end else if (s_operandS && is_equal) begin
-      if (alu_op == 0) begin
-        operandF = operandF + operandS;
-      end else if (alu_op == 1) begin
-        operandF = operandF - operandS;
-      end else if (alu_op == 2) begin
-        operandF = operandF * operandS;
-      end else if (alu_op == 3) begin
-        operandF = operandF / operandS;
-      end
+      case (alu_op)
+        0: operandF = operandF + operandS;
+        1: operandF = operandF - operandS;
+        2: operandF = operandF * operandS;
+        3: operandF = operandF / operandS;
+      endcase
       operandS = 0;
       alu_op   = 0;
     end else if (is_clear) begin

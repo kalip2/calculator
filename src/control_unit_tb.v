@@ -38,6 +38,76 @@ module control_unit_test;
 
     #10 button = 4'h8;
     is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = 4'h9;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = `clear;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = 4'h3;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+
+
+    #10 button = `add;
+    is_pressed_next = 1;
+
+    #20 is_pressed_next = 0;
+
+    #10 button = 4'h2;
+    is_pressed_next = 1;
+
+    #10 is_pressed_next = 0;
+
+    #10 button = `equal;
+    is_pressed_next = 1;
+
+    #10 is_pressed_next = 0;
+
+    #10 button = `clear;
+    is_pressed_next = 1;
+
+    #10 is_pressed_next = 0;
+
+    #10 button = 4'h7;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = `div;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = 4'h4;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = `equal;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = `add;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = 4'h7;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+    #10 button = `equal;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+
+    #10 button = `clear;
+    is_pressed_next = 1;
+    #10 is_pressed_next = 0;
+
+
 
     // End simulation after a specified time
     #50 $finish;

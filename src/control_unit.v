@@ -29,19 +29,42 @@ module control_unit (
   reg [1:0] alu_op = 0;  // ALU operation state (0: +, 1: -, 2: *, 3: /)
 
   // State outputs
-  wire s_initial, s_operandF, s_operation, s_operandS, s_result;
+  reg s_initial, s_operandF, s_operation, s_operandS, s_result;
+  reg is_pressed;
 
   // Next state inputs
   wire next_initial, next_operandF, next_operation, next_operandS, next_result;
-  wire button_pressed = (is_pressed == 0 & is_pressed_next == 1);
 
 
+  wire button_pressed = (is_pressed == 0 && is_pressed_next == 1);
+  wire is_number = button_pressed && (button >= `ZERO && button <= `NINE);
+  wire is_equal = button_pressed && (button == `EQUAL);
+  wire is_op = button_pressed && (button == `ADD | button == `SUB | button == `MUL | button == `DIV);
+  wire is_clear = button_pressed && (button == `CLEAR);
 
-  wire is_number = button_pressed & (button >= 4'h0 && button <= 4'h9);
-  wire is_equal = button_pressed & (button == `EQUAL);
-  wire is_op = button_pressed & (button == `ADD | button == `SUB | button == `MUL | button == `DIV);
-  wire is_clear = button_pressed & (button == `CLEAR);
-  wire is_pressed;
+  always @(posedge clock or posedge reset) begin
+    if (reset) begin
+      s_initial <= 1;
+      s_operandF <= 0;
+      s_operation <= 0;
+      s_operandS <= 0;
+      s_result <= 0;
+      is_pressed <= 0;
+    end else begin
+      s_initial <= next_initial;
+      s_operandF <= next_operandF;
+      s_operation <= next_operation;
+      s_operandS <= next_operandS;
+      s_result <= next_result;
+      is_pressed <= is_pressed_next;
+    end
+  end
+
+  assign next_initial = reset | is_clear | (is_equal && s_initial) | (is_op && s_initial) | (~button_pressed & s_initial);
+  assign next_operandF = ((is_number && s_initial) | (is_number && s_operandF) | (is_equal && s_operandF) | (~button_pressed & s_operandF)) && ~reset;
+  assign next_operation = ((is_op && s_operandF) | (is_op && s_operation) | (is_equal && s_operation) | (is_op && s_result) | (~button_pressed & s_operation)) && ~reset;
+  assign next_operandS =  ((is_number && s_operation)  | (is_number && s_operandS) | (is_op && s_operandS) | (~button_pressed & s_operandS) ) && ~reset;
+  assign next_result = ((is_equal && s_operandS) | (is_equal && s_result) | (is_number && s_result) | (~button_pressed & s_result)) && ~reset;
 
 
   always @(posedge clock) begin
@@ -72,64 +95,5 @@ module control_unit (
   end
 
   assign display = s_operandS;
-
-  dffe is_pressed_state (
-      is_pressed,
-      is_pressed_next,
-      clock,
-      1'b1,
-      1'b0
-  );  // 1 clock interval delay between button presses
-
-  assign next_initial = reset | is_clear | (is_equal && s_initial) | (is_op && s_initial) | (~button_pressed & s_initial);
-  assign next_operandF = ((is_number && s_initial) | (is_number && s_operandF) | (is_equal && s_operandF) | (~button_pressed & s_operandF)) && ~reset;
-  assign next_operation = ((is_op && s_operandF) | (is_op && s_operation) | (is_equal && s_operation) | (is_op && s_result) | (~button_pressed & s_operation)) && ~reset;
-  assign next_operandS =  ((is_number && s_operation)  | (is_number && s_operandS) | (is_op && s_operandS) | (~button_pressed & s_operandS) ) && ~reset;
-  assign next_result = ((is_equal && s_operandS) | (is_equal && s_result) | (is_number && s_result) | (~button_pressed & s_result)) && ~reset;
-
-
-  // One hot encoding
-  dffe fsInitial (
-      s_initial,
-      next_initial,
-      clock,
-      1'b1,
-      1'b0
-  );
-
-  dffe fsOperandF (
-      s_operandF,
-      next_operandF,
-      clock,
-      1'b1,
-      1'b0
-  );
-
-  dffe fsOperation (
-      s_operation,
-      next_operation,
-      clock,
-      1'b1,
-      1'b0
-  );
-
-  dffe fsOperandS (
-      s_operandS,
-      next_operandS,
-      clock,
-      1'b1,
-      1'b0
-  );
-
-  dffe fsResult (
-      s_result,
-      next_result,
-      clock,
-      1'b1,
-      1'b0
-  );
-
-
-
 
 endmodule

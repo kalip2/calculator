@@ -1,0 +1,8 @@
+0.7
+2020.2
+Nov 18 2020
+09:47:47
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.sim/sim_1/behav/xsim/glbl.v,1605673889,verilog,,,,glbl,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/Decoder.v,1700184373,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayController.v,,Decoder,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayController.v,1700184373,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/PmodKYPD.v,,DisplayController,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/PmodKYPD.v,1700185248,verilog,,,,PmodKYPD,,,,,,,,

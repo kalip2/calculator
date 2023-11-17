@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Nov 16 20:39:18 2023
+# Process ID: 21864
+# Current directory: C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.runs/synth_1
+# Command line: vivado.exe -log calc.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source calc.tcl
+# Log file: C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.runs/synth_1/calc.vds
+# Journal file: C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source calc.tcl -notrace

@@ -24,7 +24,8 @@ module calc(
     clk,
     JC,
     an,
-    seg
+    seg,
+	btnC
     );
 	 
 	 
@@ -33,6 +34,7 @@ module calc(
 // ==============================================================================================
 	input clk;					// 100Mhz onboard clock
 	inout [7:0] JC;			// Port JA on Basys3, JA[3:0] is Columns, JA[7:4] is rows
+	input btnC;
 	output [3:0] an;			// Anodes on seven segment display
 	output [6:0] seg;			// Cathodes on seven segment display
 
@@ -97,7 +99,7 @@ module calc(
 		.button(Decode),           // User input button (0-9, +, -, *, /, =)
 		.is_pressed_next(currentlyPressed),  // Button press signal
 		.clock(clk),            // Clock signal
-		.reset(1'b0)            // Reset signal
+		.reset(btnC)            // Reset signal
 	);
 
 endmodule

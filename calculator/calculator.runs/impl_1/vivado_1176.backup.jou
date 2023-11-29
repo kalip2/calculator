@@ -2,11 +2,11 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Thu Nov 16 19:45:14 2023
-# Process ID: 18176
+# Start of session at: Sun Nov 19 19:18:27 2023
+# Process ID: 1176
 # Current directory: C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.runs/impl_1
-# Command line: vivado.exe -log PmodKYPD.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source PmodKYPD.tcl -notrace
-# Log file: C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.runs/impl_1/PmodKYPD.vdi
+# Command line: vivado.exe -log calc.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source calc.tcl -notrace
+# Log file: C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.runs/impl_1/calc.vdi
 # Journal file: C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.runs/impl_1\vivado.jou
 #-----------------------------------------------------------
-source PmodKYPD.tcl -notrace
+source calc.tcl -notrace

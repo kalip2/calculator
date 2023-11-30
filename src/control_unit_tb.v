@@ -6,7 +6,7 @@ module control_unit_test;
   reg [3:0] button = 4'h0;
   reg is_pressed_next = 0;
   reg clock = 0;
-  reg reset = 1;
+  reg reset = 1;// we need to remove this so that the control unit always initilizes to the "initial state" when powered
 
   // Instantiate Device Under Test (DUT)
   control_unit dut (
@@ -38,26 +38,197 @@ module control_unit_test;
     // Reset the DUT
     #10 reset = 0;
 
-    press_button(`CLEAR);
-    press_button(`EIGHT);
+    // press_button(`CLEAR);
+    // press_button(`EIGHT);
+    // press_button(`NINE);
+
+    // press_button(`CLEAR);
+    // press_button(`THREE);
+    // press_button(`ADD_DIV);
+    // press_button(`TWO);
+    // press_button(`EQUAL);
+
+    // press_button(`CLEAR);
+    // press_button(`SEVEN);
+    // press_button(`ADD_DIV);
+    // press_button(`FOUR);
+    // press_button(`EQUAL);
+
+    // press_button(`ADD_DIV);
+    // press_button(`SEVEN);
+    // press_button(`EQUAL);
+    // press_button(`CLEAR);
+
+
+
+
+    // pos + pos
+    // 9 + 7 = 16
     press_button(`NINE);
-
-    press_button(`CLEAR);
-    press_button(`THREE);
-    press_button(`ADD);
-    press_button(`TWO);
-    press_button(`EQUAL);
-
-    press_button(`CLEAR);
-    press_button(`SEVEN);
-    press_button(`DIV);
-    press_button(`FOUR);
-    press_button(`EQUAL);
-
-    press_button(`ADD);
+    press_button(`ADD_DIV);
     press_button(`SEVEN);
     press_button(`EQUAL);
     press_button(`CLEAR);
+
+
+    // pos + neg 
+    // 9 + -7 = 2
+    press_button(`NINE);
+    press_button(`ADD_DIV);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // neg + neg
+    // -9 + -7 = -16
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`ADD_DIV);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // neg + pos
+    // -9 + 7 = -2
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`ADD_DIV);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // pos - pos
+    // 9 - 7 = 2
+    press_button(`NINE);
+    press_button(`SUB_DEC);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // pos - neg
+    // 9 - -7 = 16
+    press_button(`NINE);
+    press_button(`SUB_DEC);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+
+    // neg - neg
+    // -9 - -7 = -2
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`SUB_DEC);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // neg - pos
+    // -9 - 7 = -16
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`SUB_DEC);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+
+    // pos * pos
+    // 9 * 7 = 63
+    press_button(`NINE);
+    press_button(`MUL_NEG);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // pos * neg
+    // 9 * -7 = -63
+    press_button(`NINE);
+    press_button(`MUL_NEG);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // neg * neg
+    // -9 * -7 = 63
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`MUL_NEG);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // neg * pos
+    // -9 * 7 = -63
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`MUL_NEG);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // pos / pos
+    // 9 / 7 = 1
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`ADD_DIV);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // pos / neg
+    // 9 / -7 = -1
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`ADD_DIV);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // neg / neg
+    // -9 / -7 = 1
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`TOGGLE);
+    press_button(`ADD_DIV);
+    press_button(`SEVEN);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // neg / pos
+    // -9 / 7 = -1
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`TOGGLE);
+    press_button(`ADD_DIV);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
 
     #10 reset = 1;
     // End simulation after a specified time

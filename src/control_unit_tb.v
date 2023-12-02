@@ -29,6 +29,7 @@ module control_unit_test;
     end
   endtask
 
+
   // Initial block for simulation control
   initial begin
     // Setup waveform dump
@@ -38,30 +39,6 @@ module control_unit_test;
     // Reset the DUT
     #10 reset = 0;
 
-    // press_button(`CLEAR);
-    // press_button(`EIGHT);
-    // press_button(`NINE);
-
-    // press_button(`CLEAR);
-    // press_button(`THREE);
-    // press_button(`ADD_DIV);
-    // press_button(`TWO);
-    // press_button(`EQUAL);
-
-    // press_button(`CLEAR);
-    // press_button(`SEVEN);
-    // press_button(`ADD_DIV);
-    // press_button(`FOUR);
-    // press_button(`EQUAL);
-
-    // press_button(`ADD_DIV);
-    // press_button(`SEVEN);
-    // press_button(`EQUAL);
-    // press_button(`CLEAR);
-
-
-
-
     // pos + pos
     // 9 + 7 = 16
     press_button(`NINE);
@@ -69,7 +46,6 @@ module control_unit_test;
     press_button(`SEVEN);
     press_button(`EQUAL);
     press_button(`CLEAR);
-
 
     // pos + neg 
     // 9 + -7 = 2
@@ -153,6 +129,7 @@ module control_unit_test;
     press_button(`EQUAL);
     press_button(`CLEAR);
 
+
     // pos * neg
     // 9 * -7 = -63
     press_button(`NINE);
@@ -229,6 +206,147 @@ module control_unit_test;
     press_button(`EQUAL);
     press_button(`CLEAR);
 
+
+    // 2.5 + 3.5
+    press_button(`TWO);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`FIVE);
+    press_button(`ADD_DIV);
+    press_button(`THREE);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`FIVE);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // .9 + .7
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`NINE);
+    press_button(`ADD_DIV);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // .09 + .07
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`ZERO);
+    press_button(`NINE);
+    press_button(`ADD_DIV);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`ZERO);
+    press_button(`SEVEN);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // .09 + 4.93 - 5.01
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`ZERO);
+    press_button(`NINE);
+    press_button(`ADD_DIV);
+    press_button(`FOUR);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`NINE);
+    press_button(`THREE);
+    press_button(`EQUAL);
+    press_button(`SUB_DEC);
+    press_button(`FIVE);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`ZERO);
+    press_button(`ONE);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // 5.09 * 1.25
+    press_button(`FIVE);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`ZERO);
+    press_button(`NINE);
+    press_button(`MUL_NEG);
+    press_button(`ONE);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`TWO);
+    press_button(`FIVE);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // -5.09 / 1.25
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`FIVE);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`ZERO);
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`ADD_DIV);
+    press_button(`ONE);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`TWO);
+    press_button(`FIVE);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    //-.09 / 1.25
+    press_button(`TOGGLE);
+    press_button(`MUL_NEG);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`ZERO);
+    press_button(`NINE);
+    press_button(`TOGGLE);
+    press_button(`ADD_DIV);
+    press_button(`ONE);
+    press_button(`TOGGLE);
+    press_button(`SUB_DEC);
+    press_button(`TWO);
+    press_button(`FIVE);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+
+    // 5+3 = 8 -> MEM
+    // CLEAR
+    // 2 + 5 = 7
+    // MEM -> 8 + 4 = 12
+    // MEM_CLEAR = 0
+    // MEM -> 0 + 4 = 4
+    press_button(`FIVE);
+    press_button(`ADD_DIV);
+    press_button(`THREE);
+    press_button(`EQUAL);
+    press_button(`TOGGLE);
+    press_button(`MEM_STORE);
+    press_button(`CLEAR);
+    press_button(`TWO);
+    press_button(`ADD_DIV);
+    press_button(`FIVE);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+    press_button(`TOGGLE);
+    press_button(`MEM_LOAD);
+    press_button(`ADD_DIV);
+    press_button(`FOUR);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
+    press_button(`TOGGLE);
+    press_button(`MEM_CLEAR);
+    press_button(`TOGGLE);
+    press_button(`MEM_LOAD);
+    press_button(`ADD_DIV);
+    press_button(`FOUR);
+    press_button(`EQUAL);
+    press_button(`CLEAR);
 
     #10 reset = 1;
     // End simulation after a specified time

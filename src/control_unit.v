@@ -41,8 +41,11 @@ module control_unit (
   reg stored_negative = 0;
 
   localparam fixed_point_length = 2;
+  // Vivado does not support exponentiation :((((
+  // Workaround:
+  localparam fixed_point_multiplier = 100; // 10^fixed_point_length
 
-
+  reg [31:0] current_multiplier = fixed_point_multiplier / 10; //10^(fixed_point_length - decimal)
 
   // Next state inputs
   wire next_initial, next_operandF, next_operation, next_operandS, next_result;
@@ -69,6 +72,7 @@ module control_unit (
       negative <= 0;
       decimal <= 0;
       stored_value <= 0;
+      current_multiplier <= fixed_point_multiplier / 10;
     end else begin
       s_initial <= next_initial;
       s_operandF <= next_operandF;
@@ -118,15 +122,16 @@ module control_unit (
 
   always @(posedge clock) begin
     if (s_initial && is_number) begin
-      operandF = button * 10 ** fixed_point_length;
+      operandF = button * fixed_point_multiplier;
     end else if (is_toggled) begin
       toggle = ~toggle;
     end else if (s_operandF && is_number) begin
       if (decimal) begin
-        operandF = operandF + button * 10 ** (fixed_point_length - decimal);
+        operandF = operandF + button * current_multiplier;
         decimal  = decimal + 1;
+        current_multiplier = current_multiplier / 10;
       end else begin
-        operandF = operandF * 10 + button * 10 ** fixed_point_length;
+        operandF = operandF * 10 + button * fixed_point_multiplier;
       end
     end else if ((s_initial || s_operandF) && toggle && is_symbol && (button == `MUL_NEG)) begin
       negative = ~negative;
@@ -134,12 +139,14 @@ module control_unit (
     end else if ((s_initial || s_operandF) && toggle && is_symbol && (button == `SUB_DEC)) begin
       if (decimal == 0) begin
         decimal = 1;
+        current_multiplier = fixed_point_multiplier / 10;
       end
       toggle = 0;
     end else if ((s_initial || s_operandF) && toggle && is_mem_op && button == `MEM_LOAD) begin
       operandF = stored_value;
       negative = stored_negative;
       decimal  = fixed_point_length + 1;
+      current_multiplier = 0;
       toggle   = 0;
     end else if ((s_operandF || s_result) && is_op) begin
       if (button == `ADD_DIV && toggle == 0) begin
@@ -149,6 +156,7 @@ module control_unit (
           negative = 0;
         end
         decimal = 0;
+        current_multiplier = fixed_point_multiplier / 10;
       end else if (button == `SUB_DEC && toggle == 0) begin
         alu_op = 1;
         if (negative) begin
@@ -156,6 +164,7 @@ module control_unit (
           negative = 0;
         end
         decimal = 0;
+        current_multiplier = fixed_point_multiplier / 10;
       end else if (button == `MUL_NEG && toggle == 0) begin
         alu_op = 2;
         if (negative) begin
@@ -163,6 +172,7 @@ module control_unit (
           negative = 0;
         end
         decimal = 0;
+        current_multiplier = fixed_point_multiplier / 10;
       end else if (button == `ADD_DIV && toggle == 1) begin
         alu_op = 3;
         if (negative) begin
@@ -170,16 +180,18 @@ module control_unit (
           negative = 0;
         end
         decimal = 0;
+        current_multiplier = fixed_point_multiplier / 10;
       end
       toggle = 0;
     end else if (s_operation && is_number) begin
-      operandS = button * 10 ** fixed_point_length;
+      operandS = button * fixed_point_multiplier;
     end else if (s_operandS && is_number) begin
       if (decimal) begin
-        operandS = operandS + button * 10 ** (fixed_point_length - decimal);
+        operandS = operandS + button * current_multiplier;
         decimal  = decimal + 1;
+        current_multiplier = current_multiplier / 10;
       end else begin
-        operandS = operandS * 10 + button * 10 ** fixed_point_length;
+        operandS = operandS * 10 + button * fixed_point_multiplier;
       end
     end else if ((s_operation || s_operandS) && toggle && is_symbol && (button == `MUL_NEG)) begin
       negative = ~negative;
@@ -187,30 +199,34 @@ module control_unit (
     end else if ((s_operation || s_operandS) && toggle && is_symbol && (button == `SUB_DEC)) begin
       if (decimal == 0) begin
         decimal = 1;
+        current_multiplier = fixed_point_multiplier / 10;
       end
       toggle = 0;
     end else if ((s_operation || s_operandS) && toggle && is_mem_op && button == `MEM_LOAD) begin
       operandS = stored_value;
       negative = stored_negative;
       decimal  = fixed_point_length + 1;
+      current_multiplier = 0;
       toggle   = 0;
     end else if (s_operandS && is_equal) begin
       if (negative) begin
         operandS = -operandS;
         negative = 0;
         decimal  = 0;
+        current_multiplier = fixed_point_multiplier / 10;
       end
       case (alu_op)
         0: operandF = operandF + operandS;
         1: operandF = operandF - operandS;
-        2: operandF = (operandF * operandS) / (10 ** fixed_point_length);
-        3: operandF = (operandF * (10 ** fixed_point_length) / operandS);
+        2: operandF = (operandF * operandS) / (fixed_point_multiplier);
+        3: operandF = (operandF * (fixed_point_multiplier) / operandS);
       endcase
       operandS = 0;
       alu_op   = 0;
       toggle   = 0;
       negative = 0;
       decimal  = 0;
+      current_multiplier = fixed_point_multiplier / 10;
     end else if (s_result && toggle && is_mem_op && button == `MEM_STORE) begin
       stored_value = operandF;
       if (operandF < 0) begin
@@ -225,6 +241,7 @@ module control_unit (
       toggle   = 0;
       negative = 0;
       decimal  = 0;
+      current_multiplier = fixed_point_multiplier / 10;
     end else if (toggle && is_mem_op && button == `MEM_CLEAR) begin
       stored_value = 0;
       stored_negative = 0;

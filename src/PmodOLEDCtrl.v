@@ -15,8 +15,8 @@
 // Revision 0.01 - File Created
 //////////////////////////////////////////////////////////////////////////////////
 module PmodOLEDCtrl(
-		CLK,
-		RST,
+		clk,
+		btnC,
 		CS,
 		SDIN,
 		SCLK,
@@ -29,8 +29,8 @@ module PmodOLEDCtrl(
 	// ===========================================================================
 	// 										Port Declarations
 	// ===========================================================================
-	input CLK;
-	input RST;
+	input clk;
+	input btnC;
 	output CS;
 	output SDIN;
 	output SCLK;
@@ -64,8 +64,8 @@ module PmodOLEDCtrl(
 	// 										Implementation
 	// ===========================================================================
 	OledInit Init(
-			.CLK(CLK),
-			.RST(RST),
+			.CLK(clk),
+			.RST(btnC),
 			.EN(init_en),
 			.CS(init_cs),
 			.SDO(init_sdo),
@@ -78,8 +78,8 @@ module PmodOLEDCtrl(
 	);
 	
 	OledEX Example(
-			.CLK(CLK),
-			.RST(RST),
+			.CLK(clk),
+			.RST(btnC),
 			.EN(example_en),
 			.CS(example_cs),
 			.SDO(example_sdo),
@@ -104,8 +104,8 @@ module PmodOLEDCtrl(
 
 	
 	//  State Machine
-	always @(posedge CLK) begin
-			if(RST == 1'b1) begin
+	always @(posedge clk) begin
+			if(btnC == 1'b1) begin
 					current_state <= "Idle";
 			end
 			else begin

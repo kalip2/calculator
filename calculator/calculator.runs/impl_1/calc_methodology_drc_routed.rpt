@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Sun Nov 19 19:21:02 2023
+| Date         : Mon Dec  4 21:16:19 2023
 | Host         : MSI running 64-bit major release  (build 9200)
 | Command      : report_methodology -file calc_methodology_drc_routed.rpt -pb calc_methodology_drc_routed.pb -rpx calc_methodology_drc_routed.rpx
 | Design       : calc
@@ -23,12 +23,12 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 27
+             Violations found: 34
 +-----------+----------+----------------------------------+------------+
 | Rule      | Severity | Description                      | Violations |
 +-----------+----------+----------------------------------+------------+
 | HPDR-1    | Warning  | Port pin direction inconsistency | 4          |
-| SYNTH-10  | Warning  | Wide multiplier                  | 3          |
+| SYNTH-10  | Warning  | Wide multiplier                  | 10         |
 | TIMING-18 | Warning  | Missing input or output delay    | 20         |
 +-----------+----------+----------------------------------+------------+
 
@@ -56,17 +56,52 @@ Related violations: <none>
 
 SYNTH-10#1 Warning
 Wide multiplier  
-Detected multiplier at C3/operandF0 of size 16x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at C3/operandF3 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#2 Warning
 Wide multiplier  
-Detected multiplier at C3/operandF0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at C3/operandF3__0 of size 13x18, it is decomposed from a wide multipler into 16 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#3 Warning
 Wide multiplier  
-Detected multiplier at C3/operandF0__1 of size 18x16, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at C3/operandF3__1 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#4 Warning
+Wide multiplier  
+Detected multiplier at C3/operandF3__2 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#5 Warning
+Wide multiplier  
+Detected multiplier at C3/operandF3__3 of size 18x13, it is decomposed from a wide multipler into 16 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#6 Warning
+Wide multiplier  
+Detected multiplier at C3/operandF3__4 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#7 Warning
+Wide multiplier  
+Detected multiplier at C3/operandF3__5 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#8 Warning
+Wide multiplier  
+Detected multiplier at C3/operandF3__6 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#9 Warning
+Wide multiplier  
+Detected multiplier at C3/operandF3__7 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#10 Warning
+Wide multiplier  
+Detected multiplier at C3/operandF3__8 of size 18x18, it is decomposed from a wide multipler into 16 DSP blocks.
 Related violations: <none>
 
 TIMING-18#1 Warning

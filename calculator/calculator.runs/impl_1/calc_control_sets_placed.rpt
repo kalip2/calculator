@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Sun Nov 19 19:19:49 2023
+| Date         : Mon Dec  4 21:15:13 2023
 | Host         : MSI running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file calc_control_sets_placed.rpt
 | Design       : calc
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |     7 |
-|    Minimum number of control sets                        |     7 |
+| Total control sets                                       |     8 |
+|    Minimum number of control sets                        |     8 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    24 |
+| Unused register locations in slices containing registers |    34 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,12 +39,12 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |     7 |
+| Total control sets |     8 |
 | >= 0 to < 4        |     0 |
-| >= 4 to < 6        |     2 |
+| >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     1 |
-| >= 8 to < 10       |     0 |
-| >= 10 to < 12      |     0 |
+| >= 8 to < 10       |     1 |
+| >= 10 to < 12      |     1 |
 | >= 12 to < 14      |     1 |
 | >= 14 to < 16      |     0 |
 | >= 16              |     3 |
@@ -58,28 +58,29 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              34 |           13 |
-| No           | No                    | Yes                    |              12 |            7 |
+| No           | No                    | No                     |              34 |           16 |
+| No           | No                    | Yes                    |              13 |            5 |
 | No           | Yes                   | No                     |               6 |            3 |
-| Yes          | No                    | No                     |              40 |           26 |
+| Yes          | No                    | No                     |              23 |           16 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              28 |            8 |
+| Yes          | Yes                   | No                     |             138 |           84 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+------------------------+-------------------------+------------------+----------------+--------------+
-|  Clock Signal  |      Enable Signal     |     Set/Reset Signal    | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+------------------------+-------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | C3/operandS[3]_i_1_n_0 |                         |                3 |              4 |         1.33 |
-|  clk_IBUF_BUFG | C0/Col[3]_i_1_n_0      |                         |                4 |              4 |         1.00 |
-|  clk_IBUF_BUFG |                        | C0/sclk[19]_i_1_n_0     |                3 |              6 |         2.00 |
-|  clk_IBUF_BUFG |                        | btnC_IBUF               |                7 |             12 |         1.71 |
-|  clk_IBUF_BUFG | C3/operandS[3]_i_1_n_0 | C3/operandS[31]_i_1_n_0 |                8 |             28 |         3.50 |
-|  clk_IBUF_BUFG | C0/E[0]                |                         |               19 |             32 |         1.68 |
-|  clk_IBUF_BUFG |                        |                         |               13 |             34 |         2.62 |
-+----------------+------------------------+-------------------------+------------------+----------------+--------------+
++----------------+-------------------------+-------------------------+------------------+----------------+--------------+
+|  Clock Signal  |      Enable Signal      |     Set/Reset Signal    | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+-------------------------+-------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | C0/Col[3]_i_1_n_0       |                         |                4 |              4 |         1.00 |
+|  clk_IBUF_BUFG |                         | C0/sclk[19]_i_1_n_0     |                3 |              6 |         2.00 |
+|  clk_IBUF_BUFG | C3/operandS[10]_i_1_n_0 |                         |                5 |              9 |         1.80 |
+|  clk_IBUF_BUFG | C0/s_initial_reg_0      |                         |                7 |             10 |         1.43 |
+|  clk_IBUF_BUFG |                         | btnC_IBUF               |                5 |             13 |         2.60 |
+|  clk_IBUF_BUFG |                         |                         |               16 |             34 |         2.12 |
+|  clk_IBUF_BUFG | C0/s_initial_reg_0      | C0/s_initial_reg        |               45 |             54 |         1.20 |
+|  clk_IBUF_BUFG | C3/operandS[10]_i_1_n_0 | C3/operandS[63]_i_1_n_0 |               39 |             84 |         2.15 |
++----------------+-------------------------+-------------------------+------------------+----------------+--------------+
 
 

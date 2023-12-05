@@ -124,6 +124,7 @@ set ACTIVE_STEP write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
   set_param chipscope.maxJobs 2
+  set_param xicom.use_bs_reader 1
   open_checkpoint calc_routed.dcp
   set_property webtalk.parent_dir C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.cache/wt [current_project]
 set_property TOP calc [current_fileset]

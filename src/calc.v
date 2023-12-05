@@ -23,9 +23,11 @@
 module calc(
     clk,
     JC,
+	btnC,
+	sw,
     an,
     seg,
-	btnC
+	dp
     );
 	 
 	 
@@ -35,8 +37,10 @@ module calc(
 	input clk;					// 100Mhz onboard clock
 	inout [7:0] JC;			// Port JA on Basys3, JA[3:0] is Columns, JA[7:4] is rows
 	input btnC;
+	input [15:0] sw;
 	output [3:0] an;			// Anodes on seven segment display
 	output [6:0] seg;			// Cathodes on seven segment display
+	output dp;
 
 // ==============================================================================================
 // 							  		Parameters, Regsiters, and Wires
@@ -57,6 +61,10 @@ module calc(
 	wire [3:0] digit1 = (operandToDisplay / 10) % 10;
 	wire [3:0] digit2 = (operandToDisplay / 100) % 10;
 	wire [3:0] digit3 = (operandToDisplay / 1000) % 10;
+	wire [3:0] digit4 = (operandToDisplay / 10000) % 10;
+	wire [3:0] digit5 = (operandToDisplay / 100000) % 10;
+	wire [3:0] digit6 = (operandToDisplay / 1000000) % 10;
+	wire [3:0] digit7 = (operandToDisplay / 10000000) % 10;
 
 // ==============================================================================================
 // 												Implementation
@@ -88,6 +96,12 @@ module calc(
 			.digit1(digit1),
 			.digit2(digit2),
 			.digit3(digit3),
+			.digit4(digit4),
+			.digit5(digit5),
+			.digit6(digit6),
+			.digit7(digit7),
+			.displayUpper(sw[0]),
+			.dpEnable(dp),
 			.an(an),
 			.digitToDisplay(digitToDisplay)
 	);

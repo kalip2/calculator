@@ -4,6 +4,12 @@ module DisplayRotator(
     input      [3:0] digit1,
     input      [3:0] digit2,
     input      [3:0] digit3,
+    input      [3:0] digit4,
+    input      [3:0] digit5,
+    input      [3:0] digit6,
+    input      [3:0] digit7,
+    input            displayUpper,
+    output           dpEnable,
     output reg [3:0] an,
     output reg [3:0] digitToDisplay
 );
@@ -24,19 +30,23 @@ always @(*) begin
   case(counter[12:11])
     2'b00: begin
       an <= 4'b1110;
-      digitToDisplay <= digit0;
+      digitToDisplay <= displayUpper ? digit4 : digit0;
+      dpEnable       <= 1'b1;
     end
     2'b01: begin
       an <= 4'b1101;
-      digitToDisplay <= digit1;
+      digitToDisplay <= displayUpper ? digit5 : digit1;
+      dpEnable       <= 1'b1;
     end
     2'b10: begin
       an <= 4'b1011;
-      digitToDisplay <= digit2;
+      digitToDisplay <= displayUpper ? digit6 : digit2;
+      dpEnable       <= displayUpper;
     end
     2'b11: begin
       an <= 4'b0111;
-      digitToDisplay <= digit3;
+      digitToDisplay <= displayUpper ? digit7 : digit3;
+      dpEnable       <= 1'b1;
     end
   endcase
 end

@@ -1,0 +1,4 @@
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+ERROR: Could not open VCD file bin/control_unit.vcd for writing.
+$finish called at time : 4790 ns : File "C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/control_unit_tb.v" Line 373

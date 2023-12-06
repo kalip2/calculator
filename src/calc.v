@@ -27,6 +27,7 @@ module calc(
 	sw,
     an,
     seg,
+	led,
 	dp
     );
 	 
@@ -40,6 +41,7 @@ module calc(
 	input [15:0] sw;
 	output [3:0] an;			// Anodes on seven segment display
 	output [6:0] seg;			// Cathodes on seven segment display
+	output [15:0] led;
 	output dp;
 
 // ==============================================================================================
@@ -54,17 +56,21 @@ module calc(
 	wire       currentlyPressed;
 	wire [3:0] digitToDisplay;
 	wire       firstOrSecond;
-	wire [31:0]      operandF;
-	wire [31:0]      operandS;
-	wire [31:0]      operandToDisplay = firstOrSecond ? operandS : operandF;
-	wire [3:0] digit0 = operandToDisplay % 10;
-	wire [3:0] digit1 = (operandToDisplay / 10) % 10;
-	wire [3:0] digit2 = (operandToDisplay / 100) % 10;
-	wire [3:0] digit3 = (operandToDisplay / 1000) % 10;
-	wire [3:0] digit4 = (operandToDisplay / 10000) % 10;
-	wire [3:0] digit5 = (operandToDisplay / 100000) % 10;
-	wire [3:0] digit6 = (operandToDisplay / 1000000) % 10;
-	wire [3:0] digit7 = (operandToDisplay / 10000000) % 10;
+	wire       negative;
+	wire signed [31:0]      operandF;
+	wire signed [31:0]      operandS;
+	wire signed [31:0]      operandToDisplay = firstOrSecond ? operandS : operandF;
+	wire [31:0]      absOperandToDisplay = (operandToDisplay > 0) ? operandToDisplay : -operandToDisplay;
+	wire [3:0] digit0 = absOperandToDisplay % 10;
+	wire [3:0] digit1 = (absOperandToDisplay / 10) % 10;
+	wire [3:0] digit2 = (absOperandToDisplay / 100) % 10;
+	wire [3:0] digit3 = (absOperandToDisplay / 1000) % 10;
+	wire [3:0] digit4 = (absOperandToDisplay / 10000) % 10;
+	wire [3:0] digit5 = (absOperandToDisplay / 100000) % 10;
+	wire [3:0] digit6 = (absOperandToDisplay / 1000000) % 10;
+	wire [3:0] digit7 = (absOperandToDisplay / 10000000) % 10;
+	wire       displayNegative = negative | (operandToDisplay < 0);
+	assign       led[15] = displayNegative;
 
 // ==============================================================================================
 // 												Implementation
@@ -110,6 +116,8 @@ module calc(
 		.display(firstOrSecond),
 		.operandF(operandF),     // First operand
 		.operandS(operandS),     // Second operand
+		.toggle(led[0]),
+		.negative(negative),
 		.button(Decode),           // User input button (0-9, +, -, *, /, =)
 		.is_pressed_next(currentlyPressed),  // Button press signal
 		.clock(clk),            // Clock signal

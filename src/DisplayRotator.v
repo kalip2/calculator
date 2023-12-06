@@ -9,7 +9,7 @@ module DisplayRotator(
     input      [3:0] digit6,
     input      [3:0] digit7,
     input            displayUpper,
-    output           dpEnable,
+    output reg       dpEnable,
     output reg [3:0] an,
     output reg [3:0] digitToDisplay
 );

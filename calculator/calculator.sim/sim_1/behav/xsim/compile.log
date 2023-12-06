@@ -1,8 +1,4 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/Decoder.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module Decoder
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayController.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module DisplayController
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/PmodKYPD.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module PmodKYPD
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/control_unit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module control_unit
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/control_unit_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module control_unit_test

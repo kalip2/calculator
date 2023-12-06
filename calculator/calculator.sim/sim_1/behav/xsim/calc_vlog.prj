@@ -1,0 +1,13 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../src/Decoder.v" \
+"../../../../../src/DisplayController.v" \
+"../../../../../src/DisplayRotator.v" \
+"../../../../../src/control_unit.v" \
+"../../../../../src/calc.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

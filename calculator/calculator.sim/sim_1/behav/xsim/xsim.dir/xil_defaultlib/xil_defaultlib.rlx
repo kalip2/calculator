@@ -3,6 +3,9 @@
 Nov 18 2020
 09:47:47
 C:/Users/kkenm/Documents/classes/cs233vivado/calculator/calculator/calculator.sim/sim_1/behav/xsim/glbl.v,1605673889,verilog,,,,glbl,,,,,,,,
-C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/Decoder.v,1700184373,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayController.v,,Decoder,,,,,,,,
-C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayController.v,1700184373,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/PmodKYPD.v,,DisplayController,,,,,,,,
-C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/PmodKYPD.v,1700185248,verilog,,,,PmodKYPD,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/Decoder.v,1700188656,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayController.v,,Decoder,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayController.v,1700184373,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayRotator.v,,DisplayController,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/DisplayRotator.v,1701825524,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/control_unit.v,,DisplayRotator,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/calc.v,1701805301,verilog,,,,calc,,,,,,,,
+C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/control_unit.v,1701830689,verilog,,C:/Users/kkenm/Documents/classes/cs233vivado/calculator/src/control_unit_tb.v,,control_unit,,,,,,,,
+,,,,,,control_unit_test,,,,,,,,

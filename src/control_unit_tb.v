@@ -1,5 +1,25 @@
 `timescale 1ns / 1ps
 
+`define ZERO 4'h0
+`define ONE 4'h1
+`define TWO 4'h2
+`define THREE 4'h3
+`define MEM_STORE 4'h1
+`define MEM_LOAD 4'h2
+`define MEM_CLEAR 4'h3
+`define FOUR 4'h4
+`define FIVE 4'h5
+`define SIX 4'h6
+`define SEVEN 4'h7
+`define EIGHT 4'h8
+`define NINE 4'h9
+`define ADD_DIV 4'hA
+`define SUB_DEC 4'hB
+`define MUL_NEG 4'hC
+`define TOGGLE 4'hD
+`define EQUAL 4'hE
+`define CLEAR 4'hF
+
 module control_unit_test;
 
   // Testbench Signals

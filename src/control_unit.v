@@ -12,9 +12,12 @@
 `define SEVEN 4'h7
 `define EIGHT 4'h8
 `define NINE 4'h9
-`define ADD_DIV 4'hA
-`define SUB_DEC 4'hB
-`define MUL_NEG 4'hC
+`define ADD 4'hA
+`define DIV 4'hA
+`define SUB 4'hB
+`define DEC 4'hB
+`define MUL 4'hC
+`define NEG 4'hC
 `define TOGGLE 4'hD
 `define EQUAL 4'hE
 `define CLEAR 4'hF
@@ -52,10 +55,10 @@ module control_unit (
 
 
   wire button_pressed = (is_pressed == 0 && is_pressed_next == 1);
-  wire is_symbol = button_pressed && ((button == `SUB_DEC && toggle) || (button == `MUL_NEG && toggle));
+  wire is_symbol = button_pressed && ((button == `DEC && toggle) || (button == `NEG && toggle));
   wire is_number = button_pressed && ((button >= `ZERO && button <= `NINE) && ~toggle);
   wire is_equal = button_pressed && (button == `EQUAL);
-  wire is_op = button_pressed && (button == `ADD_DIV || (button == `SUB_DEC && ~toggle)  ||  ( button == `MUL_NEG && ~toggle));
+  wire is_op = button_pressed && (button == `ADD || (button == `SUB && ~toggle)  ||  ( button == `MUL && ~toggle));
   wire is_clear = button_pressed && (button == `CLEAR);
   wire is_toggled = button_pressed && (button == `TOGGLE);
   wire is_mem_op = button_pressed && toggle && (button == `MEM_STORE || button == `MEM_LOAD || button == `MEM_CLEAR);
@@ -83,6 +86,7 @@ module control_unit (
   //   end
   // end
 
+  //conditions for next state of FSM
   assign next_initial = reset || is_clear || (is_equal && s_initial) || 
                                              (is_op && s_initial) || 
                                              (~button_pressed && s_initial) || 
@@ -121,6 +125,7 @@ module control_unit (
 
 
   always @(posedge clock) begin
+    //resets to initial state, along with changing any temporary inputs to 0
     if (reset) begin
       s_initial = 1;
       s_operandF = 0;
@@ -146,10 +151,10 @@ module control_unit (
         end else begin
           operandF = operandF * 10 + button * fixed_point_multiplier;
         end
-      end else if ((s_initial || s_operandF) && toggle && is_symbol && (button == `MUL_NEG)) begin
+      end else if ((s_initial || s_operandF) && toggle && is_symbol && (button == `NEG)) begin
         negative = ~negative;
         toggle   = 0;
-      end else if ((s_initial || s_operandF) && toggle && is_symbol && (button == `SUB_DEC)) begin
+      end else if ((s_initial || s_operandF) && toggle && is_symbol && (button == `DEC)) begin
         if (decimal == 0) begin
           decimal = 1;
           current_multiplier = fixed_point_multiplier / 10;
@@ -162,7 +167,7 @@ module control_unit (
         current_multiplier = 0;
         toggle   = 0;
       end else if ((s_operandF || s_result) && is_op) begin
-        if (button == `ADD_DIV && toggle == 0) begin
+        if (button == `ADD && toggle == 0) begin
           alu_op = 0;
           if (negative) begin
             operandF = -operandF;
@@ -170,7 +175,7 @@ module control_unit (
           end
           decimal = 0;
           current_multiplier = fixed_point_multiplier / 10;
-        end else if (button == `SUB_DEC && toggle == 0) begin
+        end else if (button == `SUB && toggle == 0) begin
           alu_op = 1;
           if (negative) begin
             operandF = -operandF;
@@ -178,7 +183,7 @@ module control_unit (
           end
           decimal = 0;
           current_multiplier = fixed_point_multiplier / 10;
-        end else if (button == `MUL_NEG && toggle == 0) begin
+        end else if (button == `MUL && toggle == 0) begin
           alu_op = 2;
           if (negative) begin
             operandF = -operandF;
@@ -186,7 +191,7 @@ module control_unit (
           end
           decimal = 0;
           current_multiplier = fixed_point_multiplier / 10;
-        end else if (button == `ADD_DIV && toggle == 1) begin
+        end else if (button == `DIV && toggle == 1) begin
           alu_op = 3;
           if (negative) begin
             operandF = -operandF;
@@ -206,10 +211,10 @@ module control_unit (
         end else begin
           operandS = operandS * 10 + button * fixed_point_multiplier;
         end
-      end else if ((s_operation || s_operandS) && toggle && is_symbol && (button == `MUL_NEG)) begin
+      end else if ((s_operation || s_operandS) && toggle && is_symbol && (button == `NEG)) begin
         negative = ~negative;
         toggle   = 0;
-      end else if ((s_operation || s_operandS) && toggle && is_symbol && (button == `SUB_DEC)) begin
+      end else if ((s_operation || s_operandS) && toggle && is_symbol && (button == `DEC)) begin
         if (decimal == 0) begin
           decimal = 1;
           current_multiplier = fixed_point_multiplier / 10;
